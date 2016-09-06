@@ -17,29 +17,46 @@ Nicole Scott
 ##Simulation
 
 ```{r simulation}
-sample <- rexp(40*1000, rate = 0.2)
+lambda <- 0.2
+sample <- rexp(40*1000, rate = lambda)
 samplemat <- matrix(sample, nrow = 1000, ncol = 40)
 
 ```
 
+```{r simulation plot, fig.width= 8}
+library(ggplot2)
+ggplot() +
+        geom_density(aes(sample), color = "grey", fill = "steelblue")
+```
 
 ##Sample Mean versus Theoretical Mean
 
 ```{r means}
 samplemeans <- rowMeans(samplemat)
-hist(samplemeans)
+ggplot()+
+        geom_histogram(aes(samplemeans), color = "grey", fill = "steelblue", 
+                       bins = 10) +
+        geom_vline(xintercept = mean(samplemeans))
+samplemean <- mean(samplemeans)
+theorymean <- 1/lambda
 ```
 
 ##Sample Variance versus Theoretical Variance
 
 ```{r variance}
 samplesd <- apply(samplemat, 1, sd)
-hist(samplesd)
+ggplot()+
+        geom_histogram(aes(samplesd), color = "grey", fill = "steelblue", 
+                       bins = 10)+
+        geom_vline(xintercept = mean(samplesd))
+meansd <- mean(samplesd)
+theorysd <- 1/lambda
 ```
 
 ##Distribution
 
 ===============================================================================
+
 ##*Tooth Growth Data Analysis*
 
 ##Exploratory Analysis
