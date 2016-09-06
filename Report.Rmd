@@ -7,6 +7,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width = 8)
 ```
 
 #Simulation and Data Analysis Project
@@ -35,7 +36,7 @@ This generates data points from an exponential distribution with rate lambda =
 `r lambda`.  Data was generated for 1000 sets of 40 points and then arranged in 
 a matrix with each row corresponding to one sample set.
 
-```{r simulation plot, fig.width= 8}
+```{r simulation plot}
 library(ggplot2)
 ggplot() +
         geom_histogram(aes(sample, y = ..density..), color = "grey",

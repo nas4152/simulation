@@ -64,10 +64,10 @@ ggplot()+
 First, row means were calculated for the generated matrix to generate means of
 40 samples each and stored as samplemeans.  The plot is a histogram of these 
 means, with a vertical line indicating the average of the mean, rounded to 3 
-decimal places(4.995), with an overlayed density curve. Theoretically 
+decimal places(5.015), with an overlayed density curve. Theoretically 
 the mean of exponential data would be 1/rate, in this case 5.  The 
 difference between the sample mean (for means of 40 over 1000 simulations) and 
-the theoretical mean is -0.005.
+the theoretical mean is 0.015.
 
 ##Sample Variance versus Theoretical Variance
 
@@ -90,10 +90,10 @@ ggplot()+
 First, the standard deviation (sigma) was calculated row-wise for each of the 
 sets of 40 exponentials.  The plot is a histogram of these standard 
 deviations with a vertical line at the mean of the test stat rounded to 3 
-decimal places, 4.889.  The theoretical standard deviation is also equal 
+decimal places, 4.857.  The theoretical standard deviation is also equal 
 to 1/rate.  The difference between the sample sigma and the theoretical value is 
--0.111.  The difference of the variances (sigma^2) is equal to
--1.097679.
+-0.143.  The difference of the variances (sigma^2) is equal to
+-1.409551.
 
 ##Distribution
 
@@ -114,7 +114,7 @@ ggplot(data.frame(sample), aes(sample)) +
 ![](Report_files/figure-html/distribution plot-1.png)<!-- -->
 
 This plot shows the density of the simulated data compared to a normal curve
-with mean = 4.995 and standard of deviation = 5.0085936. Because
+with mean = 5.015 and standard of deviation = 4.9613158. Because
 mean is a linear function, it was not recalculated for the total dataset (the
 mean of the row-wise means = the mean of all data).  The normal distribution
 does not approximate the sample population as a whole very well, which is 
