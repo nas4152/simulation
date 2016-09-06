@@ -1,13 +1,6 @@
----
-title: "Simulation-and-Analysis-Project"
-output: 
-  html_document: 
-    keep_md: yes
----
+# Simulation-and-Analysis-Project
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+
 
 #Simulation and Data Analysis Project
 Nicole Scott
@@ -18,18 +11,19 @@ Nicole Scott
 
 ##Simulation
 
-```{r simulation}
+
+```r
 lambda <- 0.2
 sample <- rexp(40*1000, rate = lambda)
 samplemat <- matrix(sample, nrow = 1000, ncol = 40)
-
 ```
 
 This generates data points from an exponential distribution with rate lambda = 
-`r lambda`.  Data was generated for 1000 sets of 40 points and then arranged in 
+0.2.  Data was generated for 1000 sets of 40 points and then arranged in 
 a matrix with each row corresponding to one sample set.
 
-```{r simulation plot, fig.width= 8}
+
+```r
 library(ggplot2)
 ggplot() +
         geom_density(aes(sample), color = "grey", fill = "steelblue") +
@@ -37,11 +31,14 @@ ggplot() +
         ggtitle("Simulated Exponential Data with Rate = 0.2")
 ```
 
+![](Report_files/figure-html/simulation plot-1.png)<!-- -->
+
 This plot is a density map of all sample sets.
 
 ##Sample Mean versus Theoretical Mean
 
-```{r means}
+
+```r
 samplemeans <- rowMeans(samplemat)
 samplemean <- round(mean(samplemeans), 3)
 theorymean <- 1/lambda
@@ -52,20 +49,22 @@ ggplot()+
         xlab("Mean of 40 exponentials with lambda = 0.2")+
         ggtitle("Distribution of the Means of 40 Exponentials") +
         geom_density(aes(samplemeans))
-
 ```
+
+![](Report_files/figure-html/means-1.png)<!-- -->
 
 First, row means were calculated for the generated matrix to generate means of
 40 samples each and stored as samplemeans.  The plot is a histogram of these 
 means, with a vertical line indicating the average of the mean, rounded to 3 
-decimal places(`r samplemean`). Theoretically the mean of exponential data 
-would be 1/rate, in this case `r theorymean`.  The difference between the sample 
+decimal places(4.997). Theoretically the mean of exponential data 
+would be 1/rate, in this case 5.  The difference between the sample 
 mean (for means of 40 over 1000 simulations) and the theoretical mean is 
-`r samplemean - theorymean`.
+-0.003.
 
 ##Sample Variance versus Theoretical Variance
 
-```{r variance}
+
+```r
 samplesd <- apply(samplemat, 1, sd)
 meansd <- round(mean(samplesd), 3)
 theorysd <- 1/lambda
@@ -78,17 +77,20 @@ ggplot()+
         ggtitle("Distribution of the Variance of 40 Exponentials")
 ```
 
+![](Report_files/figure-html/variance-1.png)<!-- -->
+
 First, the standard deviation (sigma) was calculated row-wise for each of the 
 sets of 40 exponentials.  The plot is a histogram of these standard 
 deviations with a vertical line at the mean of the test stat rounded to 3 
-decimal places, `r meansd`.  The theoretical standard deviation is also equal 
+decimal places, 4.897.  The theoretical standard deviation is also equal 
 to 1/rate.  The difference between the sample sigma and the theoretical value is 
-`r meansd - theorysd`.  The difference of the variances (sigma^2) is equal to
-`r meansd^2 - theorysd^2`.
+-0.103.  The difference of the variances (sigma^2) is equal to
+-1.019391.
 
 ##Distribution
 
-```{r distribution plot}
+
+```r
 ggplot(data.frame(sample), aes(sample)) +
         geom_density(aes(sample)) +
         stat_function(fun = dnorm, 
@@ -98,7 +100,10 @@ ggplot(data.frame(sample), aes(sample)) +
         ggtitle("Simulated Exponential Data with Rate = 0.2")
 ```
 
-```{r dist means plot}
+![](Report_files/figure-html/distribution plot-1.png)<!-- -->
+
+
+```r
 ggplot(data.frame(samplemeans), aes(samplemeans)) +
         geom_density(aes(samplemeans)) +
         stat_function(fun = dnorm, 
@@ -108,7 +113,10 @@ ggplot(data.frame(samplemeans), aes(samplemeans)) +
         ggtitle("Means of 40 Exponentials with Rate = 0.2")
 ```
 
-```{r dist variance plot}
+![](Report_files/figure-html/dist means plot-1.png)<!-- -->
+
+
+```r
 ggplot(data.frame(samplesd), aes(samplesd)) +
         geom_density(aes(samplesd)) +
         stat_function(fun = dnorm, 
@@ -117,6 +125,8 @@ ggplot(data.frame(samplesd), aes(samplesd)) +
         xlab("Standard of Deviation") +
         ggtitle("Variance of 40 Exponentials with Rate = 0.2")
 ```
+
+![](Report_files/figure-html/dist variance plot-1.png)<!-- -->
 
 ===============================================================================
 
