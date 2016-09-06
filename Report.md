@@ -9,6 +9,12 @@ Nicole Scott
 
 ##Overview
 
+This simulation investigates the distribution of the mean of 40 numbers drawn
+from an exponential distribution with rate = 0.2.  Though the simulated data
+does not follow a normal distribution, the distribution of means can be 
+approximated by the normal distribution with mean = 1/rate and standard of
+deviation = 1/rate.  This follows the Central Limit Theorem.
+
 ##Simulation
 
 
@@ -35,7 +41,7 @@ ggplot() +
 
 ![](Report_files/figure-html/simulation plot-1.png)<!-- -->
 
-This plot is a density map of all sample sets.
+This plot is a histogram of the simulated data, overlayed with a density curve.
 
 ##Sample Mean versus Theoretical Mean
 
@@ -58,10 +64,10 @@ ggplot()+
 First, row means were calculated for the generated matrix to generate means of
 40 samples each and stored as samplemeans.  The plot is a histogram of these 
 means, with a vertical line indicating the average of the mean, rounded to 3 
-decimal places(5.018). Theoretically the mean of exponential data 
-would be 1/rate, in this case 5.  The difference between the sample 
-mean (for means of 40 over 1000 simulations) and the theoretical mean is 
-0.018.
+decimal places(4.995), with an overlayed density curve. Theoretically 
+the mean of exponential data would be 1/rate, in this case 5.  The 
+difference between the sample mean (for means of 40 over 1000 simulations) and 
+the theoretical mean is -0.005.
 
 ##Sample Variance versus Theoretical Variance
 
@@ -84,10 +90,10 @@ ggplot()+
 First, the standard deviation (sigma) was calculated row-wise for each of the 
 sets of 40 exponentials.  The plot is a histogram of these standard 
 deviations with a vertical line at the mean of the test stat rounded to 3 
-decimal places, 4.903.  The theoretical standard deviation is also equal 
+decimal places, 4.889.  The theoretical standard deviation is also equal 
 to 1/rate.  The difference between the sample sigma and the theoretical value is 
--0.097.  The difference of the variances (sigma^2) is equal to
--0.960591.
+-0.111.  The difference of the variances (sigma^2) is equal to
+-1.097679.
 
 ##Distribution
 
@@ -95,42 +101,43 @@ to 1/rate.  The difference between the sample sigma and the theoretical value is
 ```r
 ggplot(data.frame(sample), aes(sample)) +
         geom_histogram(aes(sample, y = ..density..), color = "grey", fill = "steelblue", position = "stack", bins = 20)+
-        geom_density(aes(sample)) +
+        geom_density(aes(sample, col = "Sample Distribution")) +
         stat_function(fun = dnorm, 
                       args = list(mean = samplemean, sd = sd(sample)), 
-                      geom = "line", col = "red") + 
+                      geom = "line", aes(col = "Normal Distribution")) + 
         xlab("") +
+        scale_color_manual(values = c("red", "black"), 
+                           name = "") +
         ggtitle("Simulated Exponential Data with Rate = 0.2")
 ```
 
 ![](Report_files/figure-html/distribution plot-1.png)<!-- -->
 
+This plot shows the density of the simulated data compared to a normal curve
+with mean = 4.995 and standard of deviation = 5.0085936. Because
+mean is a linear function, it was not recalculated for the total dataset (the
+mean of the row-wise means = the mean of all data).  The normal distribution
+does not approximate the sample population as a whole very well, which is 
+logical as the samples were drawn from an exponential distribution.
+
 
 ```r
 ggplot(data.frame(samplemeans), aes(samplemeans)) +
         geom_histogram(aes(samplemeans, y = ..density..), color = "grey", fill = "steelblue", position = "stack", bins = 20)+
-        geom_density(aes(samplemeans)) +
+        geom_density(aes(samplemeans, color = "Sample Mean Distribution")) +
         stat_function(fun = dnorm, 
                       args = list(mean = samplemean, sd = sd(samplemeans)), 
-                      geom = "line", col = "red") + 
+                      geom = "line", aes(col = "Normal Distribution")) + 
+        scale_color_manual(values = c("red", "black"),
+                           name = "") +
         xlab("Mean") +
         ggtitle("Means of 40 Exponentials with Rate = 0.2")
 ```
 
 ![](Report_files/figure-html/dist means plot-1.png)<!-- -->
 
-
-```r
-ggplot(data.frame(samplesd), aes(samplesd)) +
-        geom_density(aes(samplesd)) +
-        stat_function(fun = dnorm, 
-                      args = list(mean = meansd, sd = sd(samplesd)), 
-                      geom = "line", col = "red") + 
-        xlab("Standard of Deviation") +
-        ggtitle("Variance of 40 Exponentials with Rate = 0.2")
-```
-
-![](Report_files/figure-html/dist variance plot-1.png)<!-- -->
+The distribution of the means of sets of 40 sampled points is much better 
+approximated by the normal curve, following the central limit theorem.  
 
 ===============================================================================
 
