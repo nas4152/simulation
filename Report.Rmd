@@ -1,5 +1,6 @@
 ---
-title: "Simulation-and-Analysis-Project"
+title: "Simulation and Analysis Project"
+author: "Nicole Scott"
 output: 
   html_document: 
     keep_md: yes
@@ -10,12 +11,10 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.width = 8)
 ```
 
-#Simulation and Data Analysis Project
-Nicole Scott
 
-##*Simulation*
+##Simulation
 
-##Overview
+###Overview
 
 This simulation investigates the distribution of the mean of 40 numbers drawn
 from an exponential distribution with rate = 0.2.  Though the simulated data
@@ -23,7 +22,7 @@ does not follow a normal distribution, the distribution of means can be
 approximated by the normal distribution with mean = 1/rate and standard of
 deviation = 1/rate.  This follows the Central Limit Theorem.
 
-##Simulation
+###Simulation
 
 ```{r simulation}
 lambda <- 0.2
@@ -48,7 +47,7 @@ ggplot() +
 
 This plot is a histogram of the simulated data, overlayed with a density curve.
 
-##Sample Mean versus Theoretical Mean
+###Sample Mean versus Theoretical Mean
 
 ```{r means}
 samplemeans <- rowMeans(samplemat)
@@ -72,7 +71,7 @@ the mean of exponential data would be 1/rate, in this case `r theorymean`.  The
 difference between the sample mean (for means of 40 over 1000 simulations) and 
 the theoretical mean is `r samplemean - theorymean`.
 
-##Sample Variance versus Theoretical Variance
+###Sample Variance versus Theoretical Variance
 
 ```{r variance}
 samplesd <- apply(samplemat, 1, sd)
@@ -95,7 +94,7 @@ to 1/rate.  The difference between the sample sigma and the theoretical value is
 `r meansd - theorysd`.  The difference of the variances (sigma^2) is equal to
 `r meansd^2 - theorysd^2`.
 
-##Distribution
+###Distribution
 
 ```{r distribution plot}
 ggplot(data.frame(sample), aes(sample)) +
@@ -135,12 +134,12 @@ approximated by the normal curve, following the central limit theorem.
 
 ===============================================================================
 
-##*Tooth Growth Data Analysis*
+##Tooth Growth Data Analysis
 
-##Exploratory Analysis
+###Exploratory Analysis
 
-##Data Summary
+###Data Summary
 
-##Analysis
+###Analysis
 
-##Conclusions
+###Conclusions

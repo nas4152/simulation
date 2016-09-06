@@ -1,13 +1,12 @@
-# Simulation-and-Analysis-Project
+# Simulation and Analysis Project
+Nicole Scott  
 
 
 
-#Simulation and Data Analysis Project
-Nicole Scott
 
-##*Simulation*
+##Simulation
 
-##Overview
+###Overview
 
 This simulation investigates the distribution of the mean of 40 numbers drawn
 from an exponential distribution with rate = 0.2.  Though the simulated data
@@ -15,7 +14,7 @@ does not follow a normal distribution, the distribution of means can be
 approximated by the normal distribution with mean = 1/rate and standard of
 deviation = 1/rate.  This follows the Central Limit Theorem.
 
-##Simulation
+###Simulation
 
 
 ```r
@@ -43,7 +42,7 @@ ggplot() +
 
 This plot is a histogram of the simulated data, overlayed with a density curve.
 
-##Sample Mean versus Theoretical Mean
+###Sample Mean versus Theoretical Mean
 
 
 ```r
@@ -64,12 +63,12 @@ ggplot()+
 First, row means were calculated for the generated matrix to generate means of
 40 samples each and stored as samplemeans.  The plot is a histogram of these 
 means, with a vertical line indicating the average of the mean, rounded to 3 
-decimal places(5.015), with an overlayed density curve. Theoretically 
+decimal places(5.013), with an overlayed density curve. Theoretically 
 the mean of exponential data would be 1/rate, in this case 5.  The 
 difference between the sample mean (for means of 40 over 1000 simulations) and 
-the theoretical mean is 0.015.
+the theoretical mean is 0.013.
 
-##Sample Variance versus Theoretical Variance
+###Sample Variance versus Theoretical Variance
 
 
 ```r
@@ -90,12 +89,12 @@ ggplot()+
 First, the standard deviation (sigma) was calculated row-wise for each of the 
 sets of 40 exponentials.  The plot is a histogram of these standard 
 deviations with a vertical line at the mean of the test stat rounded to 3 
-decimal places, 4.857.  The theoretical standard deviation is also equal 
+decimal places, 4.944.  The theoretical standard deviation is also equal 
 to 1/rate.  The difference between the sample sigma and the theoretical value is 
--0.143.  The difference of the variances (sigma^2) is equal to
--1.409551.
+-0.056.  The difference of the variances (sigma^2) is equal to
+-0.556864.
 
-##Distribution
+###Distribution
 
 
 ```r
@@ -114,7 +113,7 @@ ggplot(data.frame(sample), aes(sample)) +
 ![](Report_files/figure-html/distribution plot-1.png)<!-- -->
 
 This plot shows the density of the simulated data compared to a normal curve
-with mean = 5.015 and standard of deviation = 4.9613158. Because
+with mean = 5.013 and standard of deviation = 5.0562763. Because
 mean is a linear function, it was not recalculated for the total dataset (the
 mean of the row-wise means = the mean of all data).  The normal distribution
 does not approximate the sample population as a whole very well, which is 
@@ -141,12 +140,12 @@ approximated by the normal curve, following the central limit theorem.
 
 ===============================================================================
 
-##*Tooth Growth Data Analysis*
+##Tooth Growth Data Analysis
 
-##Exploratory Analysis
+###Exploratory Analysis
 
-##Data Summary
+###Data Summary
 
-##Analysis
+###Analysis
 
-##Conclusions
+###Conclusions
