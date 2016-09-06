@@ -32,7 +32,9 @@ a matrix with each row corresponding to one sample set.
 ```{r simulation plot, fig.width= 8}
 library(ggplot2)
 ggplot() +
-        geom_density(aes(sample), color = "grey", fill = "steelblue") +
+        geom_histogram(aes(sample, y = ..density..), color = "grey",
+                       fill = "steelblue", bins = 20)+
+        geom_density(aes(sample)) +
         xlab("") +
         ggtitle("Simulated Exponential Data with Rate = 0.2")
 ```
@@ -47,7 +49,7 @@ samplemean <- round(mean(samplemeans), 3)
 theorymean <- 1/lambda
 ggplot()+
         geom_histogram(aes(samplemeans, y = ..density..), color = "grey", 
-                       fill = "steelblue", bins = 10) +
+                       fill = "steelblue", bins = 20) +
         geom_vline(xintercept = samplemean) +
         xlab("Mean of 40 exponentials with lambda = 0.2")+
         ggtitle("Distribution of the Means of 40 Exponentials") +
@@ -71,7 +73,7 @@ meansd <- round(mean(samplesd), 3)
 theorysd <- 1/lambda
 ggplot()+
         geom_histogram(aes(samplesd, y = ..density..), color = "grey", 
-                       fill = "steelblue", bins = 10)+
+                       fill = "steelblue", bins = 20)+
         geom_vline(xintercept = meansd) + 
         geom_density(aes(samplesd))+
         xlab("Standard of deviation of 40 exponentials with lambda = 0.2")+
@@ -90,9 +92,10 @@ to 1/rate.  The difference between the sample sigma and the theoretical value is
 
 ```{r distribution plot}
 ggplot(data.frame(sample), aes(sample)) +
+        geom_histogram(aes(sample, y = ..density..), color = "grey", fill = "steelblue", position = "stack", bins = 20)+
         geom_density(aes(sample)) +
         stat_function(fun = dnorm, 
-                      args = list(mean = samplemean, sd = meansd), 
+                      args = list(mean = samplemean, sd = sd(sample)), 
                       geom = "line", col = "red") + 
         xlab("") +
         ggtitle("Simulated Exponential Data with Rate = 0.2")
@@ -100,6 +103,7 @@ ggplot(data.frame(sample), aes(sample)) +
 
 ```{r dist means plot}
 ggplot(data.frame(samplemeans), aes(samplemeans)) +
+        geom_histogram(aes(samplemeans, y = ..density..), color = "grey", fill = "steelblue", position = "stack", bins = 20)+
         geom_density(aes(samplemeans)) +
         stat_function(fun = dnorm, 
                       args = list(mean = samplemean, sd = sd(samplemeans)), 
