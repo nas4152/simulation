@@ -10,13 +10,32 @@ knitr::opts_chunk$set(echo = TRUE)
 #Simulation and Data Analysis Project
 Nicole Scott
 
+##*Simulation*
+
 ##Overview
 
 ##Simulation
 
+```{r simulation}
+sample <- rexp(40*1000, rate = 0.2)
+samplemat <- matrix(sample, nrow = 1000, ncol = 40)
+
+```
+
+
 ##Sample Mean versus Theoretical Mean
 
+```{r means}
+samplemeans <- rowMeans(samplemat)
+hist(samplemeans)
+```
+
 ##Sample Variance versus Theoretical Variance
+
+```{r variance}
+samplesd <- apply(samplemat, 1, sd)
+hist(samplesd)
+```
 
 ##Distribution
 
