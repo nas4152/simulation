@@ -63,36 +63,24 @@ ggplot()+
 First, row means were calculated for the generated matrix to generate means of
 40 samples each and stored as samplemeans.  The plot is a histogram of these 
 means, with a vertical line indicating the average of the mean, rounded to 3 
-decimal places(5.013), with an overlayed density curve. Theoretically 
+decimal places(5.021), with an overlayed density curve. Theoretically 
 the mean of exponential data would be 1/rate, in this case 5.  The 
 difference between the sample mean (for means of 40 over 1000 simulations) and 
-the theoretical mean is 0.013.
+the theoretical mean is 0.021.
 
 ###Sample Variance versus Theoretical Variance
 
 
 ```r
-samplesd <- apply(samplemat, 1, sd)
-meansd <- round(mean(samplesd), 3)
+samplesd <- sd(samplemeans)
 theorysd <- 1/lambda
-ggplot()+
-        geom_histogram(aes(samplesd, y = ..density..), color = "grey", 
-                       fill = "steelblue", bins = 20)+
-        geom_vline(xintercept = meansd) + 
-        geom_density(aes(samplesd))+
-        xlab("Standard of deviation of 40 exponentials with lambda = 0.2")+
-        ggtitle("Distribution of the Variance of 40 Exponentials")
 ```
 
-![](Report_files/figure-html/variance-1.png)<!-- -->
-
-First, the standard deviation (sigma) was calculated row-wise for each of the 
-sets of 40 exponentials.  The plot is a histogram of these standard 
-deviations with a vertical line at the mean of the test stat rounded to 3 
-decimal places, 4.944.  The theoretical standard deviation is also equal 
-to 1/rate.  The difference between the sample sigma and the theoretical value is 
--0.056.  The difference of the variances (sigma^2) is equal to
--0.556864.
+The standard deviation (sigma) was calculated for the means to approximate the 
+variability in means of 40 exponentials. The theoretical standard deviation 
+is also equal to 1/rate.  The difference between the sample sigma and the 
+theoretical value is -4.2056689.  The difference of the variances 
+(sigma^2) is equal to -24.3690381.
 
 ###Distribution
 
@@ -113,7 +101,7 @@ ggplot(data.frame(sample), aes(sample)) +
 ![](Report_files/figure-html/distribution plot-1.png)<!-- -->
 
 This plot shows the density of the simulated data compared to a normal curve
-with mean = 5.013 and standard of deviation = 5.0562763. Because
+with mean = 5.021 and standard of deviation = 4.9791681. Because
 mean is a linear function, it was not recalculated for the total dataset (the
 mean of the row-wise means = the mean of all data).  The normal distribution
 does not approximate the sample population as a whole very well, which is 
@@ -122,7 +110,8 @@ logical as the samples were drawn from an exponential distribution.
 
 ```r
 ggplot(data.frame(samplemeans), aes(samplemeans)) +
-        geom_histogram(aes(samplemeans, y = ..density..), color = "grey", fill = "steelblue", position = "stack", bins = 20)+
+        geom_histogram(aes(samplemeans, y = ..density..), color = "grey", 
+                       fill = "steelblue", position = "stack", bins = 20)+
         geom_density(aes(samplemeans, color = "Sample Mean Distribution")) +
         stat_function(fun = dnorm, 
                       args = list(mean = samplemean, sd = sd(samplemeans)), 
