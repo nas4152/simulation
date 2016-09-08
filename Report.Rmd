@@ -109,17 +109,17 @@ This plot shows the density of the simulated data compared to a normal curve
 with mean = `r mean(sample)` and standard of deviation = `r sd(sample)`. The 
 normal distribution does not approximate the sample population as a whole very 
 well, which is logical as the samples were drawn from an exponential 
-distribution, not a normal one. **As mean is a linear funciton, the mean was not
+distribution, not a normal one. *As mean is a linear funciton, the mean was not
 recalculated for the sample as a whole in comparison to the mean of the set of 
-means.**
+means.*
 
 ```{r dist means plot}
 ggplot(data.frame(samplemeans), aes(samplemeans)) +
         geom_histogram(aes(samplemeans, y = ..density..), color = "grey", 
-                       fill = "steelblue", position = "stack", bins = 20)+
+                       fill = "steelblue", position = "stack", bins = 20) +
         geom_density(aes(samplemeans, color = "Sample Mean Distribution")) +
         stat_function(fun = dnorm, 
-                      args = list(mean = samplemean, sd = meansd, 
+                      args = list(mean = samplemean, sd = meansd), 
                       geom = "line", aes(col = "Normal Distribution")) + 
         scale_color_manual(values = c("red", "black"),
                            name = "") +
