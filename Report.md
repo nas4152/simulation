@@ -1,12 +1,10 @@
-# Simulation and Analysis Project
+# Distribution of Means Simulation
 Nicole Scott  
 
 
 
 
-##Simulation
-
-###Overview
+##Overview
 
 This simulation investigates the distribution of the mean of 40 numbers drawn
 from an exponential distribution with rate = 0.2.  Though the simulated data
@@ -14,7 +12,7 @@ does not follow a normal distribution, the distribution of means can be
 approximated by the normal distribution with mean = 1/rate and standard of
 deviation = 1/rate.  This follows the Central Limit Theorem.
 
-###Simulation
+##Simulation
 
 
 ```r
@@ -42,7 +40,7 @@ ggplot() +
 
 This plot is a histogram of the simulated data, overlayed with a density curve.
 
-###Sample Mean versus Theoretical Mean
+##Sample Mean versus Theoretical Mean
 
 
 ```r
@@ -63,12 +61,12 @@ ggplot()+
 First, row means were calculated for the generated matrix to generate means of
 40 samples each and stored as samplemeans.  The plot is a histogram of these 
 means, with a vertical line indicating the average of the mean, rounded to 3 
-decimal places(4.975), with an overlayed density curve. Theoretically 
+decimal places(5.019), with an overlayed density curve. Theoretically 
 the mean of exponential data would be 1/rate, in this case 5.  The 
 difference between the sample mean (for means of 40 over 1000 simulations) and 
-the theoretical mean is -0.025.
+the theoretical mean is 0.019.
 
-###Sample Variance versus Theoretical Variance
+##Sample Variance versus Theoretical Variance
 
 
 ```r
@@ -80,10 +78,10 @@ theorysd <- 1/lambda
 The standard deviation (sigma) was calculated for the means to approximate the 
 variability in means of 40 exponentials. The theoretical standard deviation 
 is also equal to 1/rate.  The difference between the theoretical sigma and the 
-sample sigma is 0.037.  However, the difference between 
+sample sigma is -0.02.  However, the difference between 
 the theoretical sigma of an exponential distribution and the sigma of means of 
-40 exponentials is 4.228.  (The difference between the 
-variances (sigma^2) is 24.404016).  The variance of the means
+40 exponentials is 4.216.  (The difference between the 
+variances (sigma^2) is 24.385344).  The variance of the means
 is smaller than the variance of the population, following the Central Limit 
 Theorem, as the distribution narrows around the population mean.
 
@@ -107,7 +105,7 @@ ggplot(data.frame(sample), aes(sample)) +
 ![](Report_files/figure-html/distribution plot-1.png)<!-- -->
 
 This plot shows the density of the simulated data compared to a normal curve
-with mean = 4.9748804 and standard of deviation = 4.9633407. The 
+with mean = 5.0193637 and standard of deviation = 5.0199068. The 
 normal distribution does not approximate the sample population as a whole very 
 well, which is logical as the samples were drawn from an exponential 
 distribution, not a normal one. *As mean is a linear funciton, the mean was not
@@ -133,266 +131,3 @@ ggplot(data.frame(samplemeans), aes(samplemeans)) +
 
 The distribution of the means of sets of 40 sampled points is much better 
 approximated by the normal curve, following the central limit theorem.  
-
-===============================================================================
-
-##Tooth Growth Data Analysis
-
-###Exploratory Analysis and Data Summary
-
-
-```r
-library(datasets)
-str(ToothGrowth)
-```
-
-```
-## 'data.frame':	60 obs. of  3 variables:
-##  $ len : num  4.2 11.5 7.3 5.8 6.4 10 11.2 11.2 5.2 7 ...
-##  $ supp: Factor w/ 2 levels "OJ","VC": 2 2 2 2 2 2 2 2 2 2 ...
-##  $ dose: num  0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 ...
-```
-
-```r
-summary(ToothGrowth)
-```
-
-```
-##       len        supp         dose      
-##  Min.   : 4.20   OJ:30   Min.   :0.500  
-##  1st Qu.:13.07   VC:30   1st Qu.:0.500  
-##  Median :19.25           Median :1.000  
-##  Mean   :18.81           Mean   :1.167  
-##  3rd Qu.:25.27           3rd Qu.:2.000  
-##  Max.   :33.90           Max.   :2.000
-```
-
-```r
-ggplot(ToothGrowth) +
-        geom_boxplot(aes(x = supp, y = len)) +
-        ylab("Tooth Length") +
-        xlab("Vitamin C Supplement Type (OJ = Orange Juice, 
-             VC = Absorbic Acid)") +
-        ggtitle("The Effect of Vitamin C on Tooth Growth in Guinea Pigs")
-```
-
-![](Report_files/figure-html/exploratory-1.png)<!-- -->
-
-This data set reports the length of odontoblasts (cells responsible for tooth 
-growth) in 60 guinea pigs after different doses of Vitamin C given through
-orange juice or absorbic acid supplements (as described in the documentation).
-Using the str() function, it was found that the dataframe contained 3 variables
-for each of the 60 guinea pigs, "len" - a numeric variable for tooth length -
-"supp" - a factor indicating the type of supplement - and "dose" - a numeric
-variable corresponding to one of the 3 doses (0.5, 1, or 2 mg/day).  Summary()
-was used to get an overview of the values in the dataset.  The boxplot shows
-the difference between the two supplement types regardless of dose, with orange
-juice appearing to result in higher tooth length values.
-
-
-```r
-ggplot(ToothGrowth) +
-        geom_boxplot(aes(x = supp, y = len, fill = factor(dose)))+
-        ylab("Tooth Length") +
-        xlab("Vitamin C Supplement Type (OJ = Orange Juice, VC = Absorbic Acid)") +
-        labs(fill = "Dose (mg/day)") +
-        ggtitle("The Effect of Vitamin C on Tooth Growth in Guinea Pigs")
-```
-
-![](Report_files/figure-html/exploratory2-1.png)<!-- -->
-
-This plot further breaks down the previous boxplot by dose.  It appears within
-each supplement type, tooth length increases with increased doseage.  It also
-appears that orange juice also resulted in higher tooth length values within 
-each dose, though that is less clear when the dose is 2 mg/day.  These are the
-trends that will be investigated in the analysis of the data.  
-
-###Analysis
-
-*For all comparisons in this analysis the test statistic used will be the mean.
-None of the comparisons will be considered paired as each observation 
-corresponds to a different guinea pig.*
-
-*Supplement Type Comparison*
-
-First to be examined is the hypothesis that orange juice supplements result in
-higher tooth length values overall (using values from all doses).  
-
-muo = average of OJ supplement group
-muv = average of absorbic acid group
-
-H0: muo = muv
-Ha: muo > muv (or muo - muv > 0)
-
-
-```r
-t.test(len ~ supp, data = ToothGrowth, paired = FALSE, alternative = "greater",
-       var.equal = FALSE)
-```
-
-```
-## 
-## 	Welch Two Sample t-test
-## 
-## data:  len by supp
-## t = 1.9153, df = 55.309, p-value = 0.03032
-## alternative hypothesis: true difference in means is greater than 0
-## 95 percent confidence interval:
-##  0.4682687       Inf
-## sample estimates:
-## mean in group OJ mean in group VC 
-##         20.66333         16.96333
-```
-
-
-A one-sided test was used to test the hypothesis that the the mean of the OJ
-supplement group was higher than the mean of the absorbic acid group.  The 
-p-value indicates that the chance of observing the same difference in means if 
-the population means of the two groups were the same is approximately 3%.  With
-a reasonable alpha level of 5%, this indicates that the population estimated by
-the experiment does have a higher tooth length value with the Orange Juice 
-supplement than absorbic acid.  The variances were not assumed to be equal.  
-*Note: this would not work in a two-sided test at the same alpha level, but as 
-the alternative hypothesis did not include the orange juice mean being lower 
-than the absorbic acid group this was not necessary.*
-
-====================================
-
-The next hypotheses examined is that increased dose groups result in a higher 
-mean tooth length.  Specifically the confidence interval for the middle dose 
-for each supplement type will be compared to the higher and lower doses to 
-determine if the patterns shown in the exploratory graphs are statistically 
-significant.
-
-*Orange Juice Group by Dose*
-
-muo.5 = mean orange juice 0.5 mg dose group
-
-muo1 = mean orange juice 1 mg dose group
-
-muo2 = mean orange juice 2 mg dose group
-
-
-First the orange juice group is subsetted and each of the means calculated for 
-later reference.
-
-
-```r
-library(dplyr)
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-```r
-ojgroup <- filter(ToothGrowth, supp == "OJ")
-ojmeans <- summarise(group_by(ojgroup, dose), mean(len))
-muo.5 <- as.numeric(ojmeans[1,2])
-muo1 <- as.numeric(ojmeans[2,2])
-muo2 <- as.numeric(ojmeans[3,2])
-```
-
-Then the 95% confidence interval is calculated for the middle (1 mg/day) dose. 
-
-
-```r
-t.test(ojgroup$len[ojgroup$dose== 1], alternative = "two.sided")
-```
-
-```
-## 
-## 	One Sample t-test
-## 
-## data:  ojgroup$len[ojgroup$dose == 1]
-## t = 18.355, df = 9, p-value = 1.933e-08
-## alternative hypothesis: true mean is not equal to 0
-## 95 percent confidence interval:
-##  19.90227 25.49773
-## sample estimates:
-## mean of x 
-##      22.7
-```
-
-The 95% confidence interval for the 1 mg/ day dose group is approximately 19.9 
-to 25.5.  This means that observing a mean outside this range for any population 
-with an equivalent mean to the population estimated by the 1 mg dose sample has 
-a probability of 5% or lower.  As the mean for the 0.5 mg group is 13.23 and 
-the mean for the 2 mg group is 26.06, both of which lie outside the confidence
-interval of the 1 mg group, the differences observed between doses can be 
-considered statistically significant with an alpha of 5%.  This test does assume
-equal variance.
-
-*Absorbic Acid Group by Dose*
-
-muv.5 = mean absorbic acid 0.5 mg dose group
-
-muv1 = mean absorbic acid 1 mg dose group
-
-muv2 = mean absorbic acid 2 mg dose group
-
-
-First the absorbic acid group is subsetted and each of the means calculated for 
-later reference.
-
-
-```r
-library(dplyr)
-vcgroup <- filter(ToothGrowth, supp == "VC")
-vcmeans <- summarise(group_by(vcgroup, dose), mean(len))
-muv.5 <- as.numeric(vcmeans[1,2])
-muv1 <- as.numeric(vcmeans[2,2])
-muv2 <- as.numeric(vcmeans[3,2])
-```
-
-Then the 95% confidence interval is calculated for the middle (1 mg/day) dose. 
-
-
-```r
-t.test(vcgroup$len[vcgroup$dose== 1], alternative = "two.sided")
-```
-
-```
-## 
-## 	One Sample t-test
-## 
-## data:  vcgroup$len[vcgroup$dose == 1]
-## t = 21.083, df = 9, p-value = 5.699e-09
-## alternative hypothesis: true mean is not equal to 0
-## 95 percent confidence interval:
-##  14.97066 18.56934
-## sample estimates:
-## mean of x 
-##     16.77
-```
-
-The 95% confidence interval for the 1 mg/ day dose group is approximately 15.0 
-to 18.6.  This means that observing a mean outside this range for any population 
-with an equivalent mean to the population estimated by the 1 mg dose sample has 
-a probability of 5% or lower.  As the mean for the 0.5 mg group is 7.98 and 
-the mean for the 2 mg group is 26.14, both of which lie outside the confidence
-interval of the 1 mg group, the differences observed between doses can be 
-considered statistically significant with an alpha of 5%.  This test does assume
-equal variance.
-
-###Conclusions
-
-With the assumptions described in the analysis section and a type I error rate 
-of 5% (a 5% chance for each test that the null hypothesis was true), the data
-supports the hypotheses that 1) the orange juice supplement group population 
-has a higher mean than the group given the absorbic acid supplement and 2) and 
-3) each supplement group showed an increasing tooth length value as the dose of
-the population increased.
