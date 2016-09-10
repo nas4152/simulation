@@ -98,7 +98,7 @@ might be:
     Distribution: Via figures and text, explain how one can tell the 
     distribution is approximately normal.
 
-Part 2: Basic Inferential Data Analysis Instructionsless 
+Part 2: Basic Inferential Data Analysis Instructions
 
 Now in the second portion of the project, we're going to analyze the ToothGrowth 
 data in the R datasets package.

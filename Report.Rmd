@@ -136,6 +136,29 @@ approximated by the normal curve, following the central limit theorem.
 
 ###Exploratory Analysis
 
+```{r exploratory}
+library(datasets)
+str(ToothGrowth)
+summary(ToothGrowth)
+ggplot(ToothGrowth) +
+        geom_boxplot(aes(x = supp, y = len)) +
+        ylab("Tooth Length") +
+        xlab("Vitamin C Supplement Type (OJ = Orange Juice, 
+             VC = Absorbic Acid)") +
+        ggtitle("The Effect of Vitamin C on Tooth Growth in Guinea Pigs")
+
+```
+
+```{r exploratory2}
+ggplot(ToothGrowth) +
+        geom_boxplot(aes(x = supp, y = len, fill = factor(dose)))+
+        ylab("Tooth Length") +
+        xlab("Vitamin C Supplement Type (OJ = Orange Juice, VC = Absorbic Acid)") +
+        labs(fill = "Dose (mg/day)") +
+        ggtitle("The Effect of Vitamin C on Tooth Growth in Guinea Pigs")
+
+```
+
 ###Data Summary
 
 ###Analysis
