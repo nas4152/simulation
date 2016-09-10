@@ -134,7 +134,7 @@ approximated by the normal curve, following the central limit theorem.
 
 ##Tooth Growth Data Analysis
 
-###Exploratory Analysis
+###Exploratory Analysis and Data Summary
 
 ```{r exploratory}
 library(datasets)
@@ -149,6 +149,17 @@ ggplot(ToothGrowth) +
 
 ```
 
+This data set reports the length of odontoblasts (cells responsible for tooth 
+growth) in 60 guinea pigs after different doses of Vitamin C given through
+orange juice or absorbic acid supplements (as described in the documentation).
+Using the str() function, it was found that the dataframe contained 3 variables
+for each of the 60 guinea pigs, "len" - a numeric variable for tooth length -
+"supp" - a factor indicating the type of supplement - and "dose" - a numeric
+variable corresponding to one of the 3 doses (0.5, 1, or 2 mg/day).  Summary()
+was used to get an overview of the values in the dataset.  The boxplot shows
+the difference between the two supplement types regardless of dose, with orange
+juice appearing to result in higher tooth length values.
+
 ```{r exploratory2}
 ggplot(ToothGrowth) +
         geom_boxplot(aes(x = supp, y = len, fill = factor(dose)))+
@@ -159,8 +170,49 @@ ggplot(ToothGrowth) +
 
 ```
 
-###Data Summary
+This plot further breaks down the previous boxplot by dose.  It appears within
+each supplement type, tooth length increases with increased doseage.  It also
+appears that orange juice also resulted in higher tooth length values within 
+each dose, though that is less clear when the dose is 2 mg/day.  These are the
+trends that will be investigated in the analysis of the data.  
 
 ###Analysis
+
+*For all comparisons in this analysis the test statistic used will be the mean.*
+*None of the comparisons will be considered paired as each observation* 
+*corresponds to a different guinea pig.*
+
+*Supplement Type Comparison*
+
+First to be examined is the hypothesis that orange juice supplements result in
+higher tooth length values overall (using values from all doses).  
+
+muo = average of OJ supplement group
+muv = average of absorbic acid group
+
+H0: muo = muv
+Ha: muo > muv
+
+```{r supp hypothesis}
+
+```
+
+The next hypotheses examined is that increased dose groups result in a higher 
+mean tooth length.  Specifically the confidence interval for the middle dose 
+for each supplement type will be compared to the higher and lower doses to 
+determine if the patterns shown in the exploratory graphs are statistically 
+significant.
+
+*Orange Juice Group by Dose*
+
+muo.5 = mean orange juice 0.5 mg dose group
+muo1 = mean orange juice 1 mg dose group
+muo2 = mean orange juice 2 mg dose group
+
+*Absorbic Acid Group by Dose*
+
+muo.5 = mean absorbic acid 0.5 mg dose group
+muo1 = mean absorbic acid 1 mg dose group
+muo2 = mean absorbic acid 2 mg dose group
 
 ###Conclusions
